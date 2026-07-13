@@ -1,0 +1,4 @@
+interface:
+  display_name: "截图转 Obsidian 知识库"
+  short_description: "把截图整理成 Obsidian Markdown 知识库"
+  default_prompt: "Use $screenshot-to-obsidian-knowledge to turn uploaded screenshots into structured Obsidian Markdown notes."
