@@ -1,86 +1,53 @@
 ---
 name: screenshot-to-obsidian-knowledge
-description: Turn screenshots, long screenshots, app/web page captures, social posts, chat screenshots, article fragments, product/design references, and other saved visual information snippets into structured Obsidian-ready Markdown knowledge notes. Use when the user uploads screenshots or asks to extract, organize, classify, archive, link, or package screenshot content into a personal knowledge base with Raw Notes, topic notes, YAML frontmatter, tags, backlinks, filing decisions, and uncertainty labeling.
+description: Convert screenshots and saved visual captures into traceable Obsidian Raw Notes, category boards, and optional topic notes. Use for screenshot OCR, extraction, classification, archiving, linking, uncertainty handling, or knowledge-base packaging.
 ---
 
 # Screenshot To Obsidian Knowledge
 
-## Purpose
+## Core Rules
 
-Act as a screenshot knowledge-archiving assistant. Convert casual screenshot collections into reusable personal knowledge assets, not just OCR text or summaries.
+- Preserve visible facts before interpreting them. Never invent cropped, blurred, or missing context.
+- Copy every processed image to the output directory's `_Source_Images/YYYY-MM` while keeping the source file unchanged.
+- For each text-information screenshot, create one Raw Note and embed its copied image.
+- For each non-text image, record the original path, copied path, and routing reason; do not create a text-style Raw Note.
+- Keep screenshot facts, OCR uncertainty, and assistant synthesis visibly separate.
+- For sensitive or high-stakes content, organize only the visible information and avoid professional judgments.
 
-Prioritize fidelity first, then structure. Preserve original visible information and context before adding interpretation, categorization, tags, backlinks, or reuse suggestions.
+## Defaults
 
-Treat the process as screenshot ingestion: screenshots and OCR are raw sources, Raw Notes are low-processing records, and topic notes are reusable knowledge pages.
+- Ask preference questions only when the answer would materially change classification, naming, folders, tags, or links. Never interrupt Phase 1 for preferences.
+- Use the default first-level taxonomy when no user taxonomy is available.
+- Always create Raw Notes, category boards, and a global index. Create topic notes only when requested or when a stable reusable topic is clearly supported.
+- Keep backlinks meaningful and sparse.
+- In Raw Note frontmatter, keep necessary operational metadata but omit `type`, `title`, `source_type`, and `source_platform`. Topic notes may keep `type: knowledge_note`. Put the readable title in the filename and H1; record visible platforms in the body. Follow an explicit user schema instead.
 
-## Use Boundaries
+## Process
 
-Use this skill for screenshots that contain information worth organizing: mobile or desktop screenshots, webpages, app screens, social media posts, chats, article fragments, learning materials, industry information, product cases, design references, video stills, and "might be useful later" snippets.
+1. Run `references/phase-1-intake-raw-capture.md` to count, route, copy, read, preserve, and capture screenshots.
+2. Run `references/phase-2-evaluation-knowledge-notes.md` to evaluate, classify, file, build boards, and optionally synthesize topics.
 
-Do not use it as the primary workflow when the user only wants image editing, style transfer, translation, or raw OCR extraction. If a screenshot contains sensitive private data, account credentials, identity documents, or high-stakes medical/legal/financial content, warn the user and only organize the visible information without making professional judgments.
+For 1-5 screenshots, inline output is acceptable. For 6-20, summarize in chat and write complete files. For more than 20, prioritize a complete folder package and concise handoff.
 
-## Preference Setup
+## Deliverables
 
-Do not ask knowledge-base preference questions during Phase 1 raw capture. Phase 1 should only receive inputs, split text screenshots from non-text images, preserve visible facts, and create Raw Notes.
+- One Raw Note per text-information screenshot.
+- A copy manifest covering all processed images, including routing reasons for non-text images.
+- One board page per populated first-level category, embedding both `![[raw_note#^keywords]]` and `![[raw_note#^core-summary]]`.
+- A shallow global index linking category boards.
+- Filing decisions and an uncertainty list.
+- Optional traceable topic notes.
 
-During Phase 2, if the user has not provided knowledge-base preferences and the preferences affect classification, tagging, backlinks, filenames, or folder placement, ask briefly for:
+## Completion Checks
 
-1. Main knowledge-base goals: content creation, learning review, product work, design inspiration, industry research, personal interests, or other.
-2. Classification preference: default taxonomy, AI-selected categories, or the user's existing taxonomy.
-3. Output granularity: one Raw Note per screenshot, merged topic notes, or both.
-4. Processing depth: original preservation, secondary synthesis, or both.
-5. Existing Obsidian folder, tag, backlink, or filename rules.
-
-If the user wants to skip setup or the decision is not blocking, use defaults:
-
-- Goals: content creation, learning review, product work, and design inspiration.
-- Classification: fixed first-level taxonomy. Do not force second-level topics when the user has not chosen a topic system.
-- Output: Raw Notes, first-level category board pages, and a global index. Create topic notes only when the user asks for them or the content clearly forms a stable reusable topic.
-- Format: Obsidian Markdown.
-- Link style: useful backlinks only; avoid link spam.
-
-## Workflow
-
-Use two phases:
-
-1. Intake and Raw Capture: count the batch, split text screenshots from non-text images, inspect text screenshots, preserve visible facts, create Raw Notes, and label recognition uncertainty.
-2. Evaluation and Knowledge Notes: confirm or default user preferences, classify by likely future use, decide whether Raw Notes should be filed, held for judgment, or filed with user confirmation, and create category board pages. Do not force topic notes unless requested or the topic is clearly stable.
-
-For 1-5 screenshots, full inline Raw Notes and topic notes are acceptable. For 6-20 screenshots, show a concise summary in chat and write complete Markdown files when file access is available. For more than 20 screenshots, prioritize a folder structure and packaged output over expanding every note in chat.
-
-## Required Outputs
-
-Every batch should produce:
-
-- Raw Notes: one per text-information screenshot, preserving original visible content.
-- Non-text image routing list: for screenshots that are mainly photos, pure visual references, memes, image assets, or other non-text content, record original path, moved path, and reason instead of forcing a text-style Raw Note.
-- Category board pages: one page per first-level category, linking to the Raw Notes in that category and embedding each Raw Note's `^core-summary` key-sentence block as the preview. Do not duplicate preview text in the board page.
-- Topic notes: optional reusable knowledge notes only when the user requests them or the material clearly supports stable synthesis.
-- Filing decisions: mark each Raw Note as filed content, pending judgment, or filed but requiring user confirmation, with brief reasons.
-- Uncertainty list: explicit notes about unclear, incomplete, inferred, or user-confirmation-needed content.
-
-When writing files, use the default folder structure and naming rules in `references/taxonomy.md`. When drafting note bodies, use the templates in `references/templates.md`.
-
-## Quality Bar
-
-Before finishing, check that the output:
-
-- Identifies each screenshot separately.
-- Separates text-information screenshots from non-text images before Raw Note creation.
-- Preserves original information before summarizing.
-- Clearly separates screenshot facts from assistant interpretation.
-- Labels uncertainty instead of inventing missing context.
-- Includes YAML frontmatter for formal notes.
-- Uses meaningful tags and restrained backlinks.
-- Category board pages link to their Raw Notes.
-- Filed Raw Notes with clear categories have moved from `00_Inbox_待整理` into their category folders.
-- Raw Note count, copied source-image count, OCR JSON count, category-board link count, and actual Raw files inside category folders are consistent.
-- Category board previews embed the Raw Note `^core-summary` block instead of copying standalone preview text.
-- If topic notes are generated, they link to source Raw Notes and their claims are traceable.
-- Can be placed directly into Obsidian.
+- Every processed image is copied exactly once to `_Source_Images/YYYY-MM`, and every source file remains unchanged.
+- Processed-image count = copied-image count = copy-manifest count, and every copied path exists.
+- Text-screenshot count = Raw Note count = OCR JSON count = keyword-preview count = core-summary-preview count; non-text-image count = routing-reason count.
+- Filed Raw Notes are in their category folders; unresolved classification alone uses `12_待判断`.
+- Raw Notes preserve source facts, uncertainty is explicit, and frontmatter follows the property rule above.
+- Board links resolve; topic-note claims link back to source Raw Notes.
 
 ## References
 
-- Read `references/workflow.md` first when handling a real screenshot batch. It routes to the phase-specific workflow files.
-- Read `references/templates.md` when generating Raw Notes or topic notes.
-- Read `references/taxonomy.md` when choosing categories, tags, filenames, folders, or backlink density.
+- Read `references/templates.md` when writing notes or indexes.
+- Read `references/taxonomy.md` when classifying, tagging, naming, filing, or linking.
