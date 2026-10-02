@@ -19,6 +19,7 @@ description: Convert screenshots and saved visual captures into traceable Obsidi
 - Ask preference questions only when the answer would materially change classification, naming, folders, tags, or links. Never interrupt Phase 1 for preferences.
 - Use the default first-level taxonomy when no user taxonomy is available.
 - Always create Raw Notes, category boards, and a global index. Create topic notes only when requested or when a stable reusable topic is clearly supported.
+- Deliver exactly one `YYYY-MM_截图整理索引.md` per batch. It serves as both the batch index and the image copy/routing manifest; do not keep a second standalone Markdown copy list for the same batch.
 - Keep backlinks meaningful and sparse.
 - In Raw Note frontmatter, keep necessary operational metadata but omit `type`, `title`, `source_type`, and `source_platform`. Topic notes may keep `type: knowledge_note`. Put the readable title in the filename and H1; record visible platforms in the body. Follow an explicit user schema instead.
 
@@ -32,7 +33,7 @@ For 1-5 screenshots, inline output is acceptable. For 6-20, summarize in chat an
 ## Deliverables
 
 - One Raw Note per text-information screenshot.
-- A copy manifest covering all processed images, including routing reasons for non-text images.
+- One combined batch index: group text screenshots by category, embed both `![[raw_note#^keywords]]` and `![[raw_note#^core-summary]]` for every Raw Note, link every non-text image with its routing reason, and include a copy/routing manifest covering all processed images.
 - One board page per populated first-level category, embedding both `![[raw_note#^keywords]]` and `![[raw_note#^core-summary]]`.
 - A shallow global index linking category boards.
 - Filing decisions and an uncertainty list.
@@ -43,6 +44,8 @@ For 1-5 screenshots, inline output is acceptable. For 6-20, summarize in chat an
 - Every processed image is copied exactly once to `_Source_Images/YYYY-MM`, and every source file remains unchanged.
 - Processed-image count = copied-image count = copy-manifest count, and every copied path exists.
 - Text-screenshot count = Raw Note count = OCR JSON count = keyword-preview count = core-summary-preview count; non-text-image count = routing-reason count.
+- Every Raw Note in the batch index has both previews; every non-text image has a resolvable image link and routing reason; copy-manifest rows equal the processed-image count.
+- After a full two-phase run, do not retain a separate `YYYY-MM_图片复制与分流清单.md`. If Phase 1 created one as an intermediate artifact, delete it only after validating the combined batch index.
 - Filed Raw Notes are in their category folders; unresolved classification alone uses `12_待判断`.
 - Raw Notes preserve source facts, uncertainty is explicit, and frontmatter follows the property rule above.
 - Board links resolve; topic-note claims link back to source Raw Notes.
